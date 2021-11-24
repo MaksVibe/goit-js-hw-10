@@ -38,11 +38,14 @@ const renderCountry = (countries) => {
 
 const searchCountry = () => {
   const searchingCountry = refs.input.value.trim();
+  if (searchingCountry === "") {
+    return (refs.ul.innerHTML = "");
+  }
   fetchCountries(searchingCountry)
     .then((countries) => {
       if (countries.length > 10) {
-        refs.ul.innerHTML = "";
         refs.div.innerHTML = "";
+        refs.ul.innerHTML = "";
         return Notify.info(
           "Too many matches found. Please enter a more specific name."
         );
@@ -57,7 +60,6 @@ const searchCountry = () => {
     })
     .catch(() => {
       refs.ul.innerHTML = "";
-      refs.div.innerHTML = "";
       Notify.failure("Oops, there is no country with that name");
     });
 };
